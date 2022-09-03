@@ -10,10 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialDesign">
         <activity
-            android:name=".DrawerLayoutActivity"
-            android:exported="true"
-            android:label="biubiubiu"
-            >
+            android:name=".NavigationViewActivity"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,11 +19,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".DrawerLayoutActivity"
             android:exported="true"
-            android:label="哈哈哈">
+            android:label="biubiubiu">
 
         </activity>
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="哈哈哈"></activity>
     </application>
 
 </manifest>
