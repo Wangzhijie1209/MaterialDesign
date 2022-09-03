@@ -10,15 +10,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialDesign">
         <activity
-            android:name=".MainActivity"
+            android:name=".DrawerLayoutActivity"
             android:exported="true"
-            android:label="哈哈哈"
+            android:label="biubiubiu"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="哈哈哈">
+
         </activity>
     </application>
 
