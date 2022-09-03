@@ -9,7 +9,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 public class NavigationViewActivity extends AppCompatActivity {
@@ -22,6 +24,7 @@ public class NavigationViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_navigation_view);
         Toolbar toolbar = findViewById(R.id.nav_toolbar);
         setSupportActionBar(toolbar);
+        FloatingActionButton fab = findViewById(R.id.fab);
         mNav_drawer_layout = findViewById(R.id.nav_drawer_layout);
         NavigationView nav_view = findViewById(R.id.nav_view);
         ActionBar actionBar = getSupportActionBar();
@@ -36,6 +39,12 @@ public class NavigationViewActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 mNav_drawer_layout.closeDrawers();
                 return true;
+            }
+        });
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(NavigationViewActivity.this, "FAB clicked", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -21,6 +21,14 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:popupTheme="@style/Theme.AppCompat.Light" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:id="@+id/fab"
+            android:layout_margin="16dp"
+            android:elevation="8dp"
+            android:src="@drawable/ic_launcher_background"/>
     </FrameLayout>
 
     <com.google.android.material.navigation.NavigationView
