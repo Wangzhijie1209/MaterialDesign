@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 public class NavigationViewActivity extends AppCompatActivity {
 
@@ -44,7 +45,13 @@ public class NavigationViewActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(NavigationViewActivity.this, "FAB clicked", Toast.LENGTH_SHORT).show();
+                Snackbar.make(view,"Data deleted",Snackbar.LENGTH_SHORT)
+                        .setAction("Undo", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Toast.makeText(NavigationViewActivity.this, "Data restored", Toast.LENGTH_SHORT).show();
+                            }
+                        }).show();
             }
         });
     }
