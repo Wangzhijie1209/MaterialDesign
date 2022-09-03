@@ -6,13 +6,36 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <!--
+    这里使用了xmlns:app指定了一个新的命名空间,也就是说现在可以使用:
+    app:attribute这样的写法了。
+    为什么要这样写?因为Material Design是在Android5.0系统中才出现的
+    为了兼顾5.0之前的老系统,就不能使用
+    android:attribute这样的写法了。而是应该用
+    app:attribute
+
+    高度设置为了actionBar的高度,
+    由于我们刚才在themes.xml中将程序的主题指定成了淡色主题,因此Toolbar现在也是
+    淡色主题,而Toolbar上面的各种元素就会自动使用深色系,这都是为了和主体颜色分开,
+    淡色这个效果看起来就会很差,之前使用ActionBar时文字都是白色的,现在变成黑色的
+    会很难看。
+    为了让Toolbar单独使用深色系主题,这里我们使用android:theme属性,将Toolbar的主题
+    指定成了ThemeOverlay.AppCompat.Dark.ActionBar
+    但是这样指定完了之后又会出现新的问题,如果Toolbar中有菜单按钮,那么弹出的菜单项也会
+    变成深色主题,这样就再次变得十分难看,于是这里使用了app:popupTheme属性将弹出的菜单项
+    指定成了淡色主题。
+    之所以使用app:popupTheme 是因为这个属性是Android5.0系统中新增的,可以兼容5.0
+    以下的系统
+    -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:background="?attr/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/Theme.AppCompat.Light"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
