@@ -10,3 +10,4 @@ Theme.AppCompat.Light.NoActionBar  表示淡色主题,它会将界面的主体�
 
 在AndroidManifest.xml中的Activity标签中增加label属性 用于指定在Toolbar中显示文字内容 如果没有指定
 的话,会默认使用application中指定的label内容,也就是我们的应用名称
+１
