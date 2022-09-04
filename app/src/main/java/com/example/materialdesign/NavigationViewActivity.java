@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -46,7 +47,8 @@ public class NavigationViewActivity extends AppCompatActivity {
     };
 
     private List<Fruit> fruitList = new ArrayList<>();
-
+    private SwipeRefreshLayout swipe_refresh;
+    private FruitAdapter fruitAdapter;
 
 
     @Override
@@ -82,8 +84,38 @@ public class NavigationViewActivity extends AppCompatActivity {
 
         GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
         recycler_view.setLayoutManager(layoutManager);
-        FruitAdapter fruitAdapter = new FruitAdapter(fruitList);
+        fruitAdapter = new FruitAdapter(fruitList);
         recycler_view.setAdapter(fruitAdapter);
+
+        swipe_refresh.setColorSchemeResources(R.color.design_default_color_primary);
+        swipe_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //通常情况下 onRefresh中应该去网络上请求最新的数据,然后再将这些数据展示出来,
+                refreshFruits();
+            }
+        });
+    }
+
+    private void refreshFruits(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        initFruits();
+                        fruitAdapter.notifyDataSetChanged();
+                        swipe_refresh.setRefreshing(false);
+                    }
+                });
+            }
+        }).start();
     }
 
     private void initFruits() {
@@ -105,5 +137,6 @@ public class NavigationViewActivity extends AppCompatActivity {
         nav_view = findViewById(R.id.nav_view);
         actionBar = getSupportActionBar();
         recycler_view = findViewById(R.id.recycler_view);
+        swipe_refresh = findViewById(R.id.swipe_refresh);
     }
 }
