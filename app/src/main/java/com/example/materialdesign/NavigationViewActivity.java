@@ -5,6 +5,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -15,22 +17,45 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 public class NavigationViewActivity extends AppCompatActivity {
 
     private DrawerLayout mNav_drawer_layout;
+    private NavigationView nav_view;
+    private ActionBar actionBar;
+    private FloatingActionButton fab;
+    private RecyclerView recycler_view;
+    private Toolbar toolbar;
+
+    //定义了一个数组,数组中存放了很多个Fruit的实例,每个实例都代表一种水果
+    private Fruit[] fruits = {new Fruit("Apple", R.drawable.a),
+            new Fruit("Banana", R.drawable.b),
+             new Fruit("Banana", R.drawable.c),
+             new Fruit("Banana", R.drawable.d),
+             new Fruit("Banana", R.drawable.e),
+             new Fruit("Banana", R.drawable.f),
+             new Fruit("Banana", R.drawable.g),
+             new Fruit("Banana", R.drawable.h),
+             new Fruit("Banana", R.drawable.i),
+             new Fruit("Banana", R.drawable.j),
+             new Fruit("Banana", R.drawable.q),
+             new Fruit("Banana", R.drawable.s),
+    };
+
+    private List<Fruit> fruitList = new ArrayList<>();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation_view);
-        Toolbar toolbar = findViewById(R.id.nav_toolbar);
-        setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        mNav_drawer_layout = findViewById(R.id.nav_drawer_layout);
-        NavigationView nav_view = findViewById(R.id.nav_view);
-        ActionBar actionBar = getSupportActionBar();
-
-        if(actionBar!=null){
+        initView();
+        initFruits();
+        if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.drawable.b);
         }
@@ -45,7 +70,7 @@ public class NavigationViewActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view,"Data deleted",Snackbar.LENGTH_SHORT)
+                Snackbar.make(view, "Data deleted", Snackbar.LENGTH_SHORT)
                         .setAction("Undo", new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -54,5 +79,31 @@ public class NavigationViewActivity extends AppCompatActivity {
                         }).show();
             }
         });
+
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
+        recycler_view.setLayoutManager(layoutManager);
+        FruitAdapter fruitAdapter = new FruitAdapter(fruitList);
+        recycler_view.setAdapter(fruitAdapter);
+    }
+
+    private void initFruits() {
+        //先清空一下fruitList中的数据,接着使用随机函数,从刚才定义的Fruit数组中随机取出一个
+        //水果放到List中
+        fruitList.clear();
+        for (int i = 0; i < 50; i++) {
+            Random random = new Random();
+            int index = random.nextInt(fruits.length);
+            fruitList.add(fruits[index]);
+        }
+    }
+
+    private void initView() {
+        toolbar = findViewById(R.id.nav_toolbar);
+        setSupportActionBar(toolbar);
+        fab = findViewById(R.id.fab);
+        mNav_drawer_layout = findViewById(R.id.nav_drawer_layout);
+        nav_view = findViewById(R.id.nav_view);
+        actionBar = getSupportActionBar();
+        recycler_view = findViewById(R.id.recycler_view);
     }
 }
