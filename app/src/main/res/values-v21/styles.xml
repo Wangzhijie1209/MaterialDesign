@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 此主题是将状态栏颜色指定为透明的
+ 该文件是专门给FruitActivity使用的, FruitActivityTheme的 parent是 Theme.MaterialDesign
+ 也就是说 它继承了Theme.MaterialDesign中的所有特性,然后我们在 FruitActivityTheme中将
+ 状态栏的颜色指定成透明色,
+ 由于values-v21 目录是只有Android5.0及以上系统才会去读取的,所以这样写是没有问题的
+
+ 随后将该文件在AndroidManifest.xml中 让FruitActivity使用这个主题即可
+ -->
+<resources>
+    <style name="FruitActivityTheme" parent="Theme.MaterialDesign">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+</resources>

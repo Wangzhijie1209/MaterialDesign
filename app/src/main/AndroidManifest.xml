@@ -10,8 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialDesign">
         <activity
+            android:name=".FruitActivity"
+            android:exported="false"
+            android:theme="@style/FruitActivityTheme"
+            />
+        <activity
             android:name=".NavigationViewActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,13 +26,11 @@
         <activity
             android:name=".DrawerLayoutActivity"
             android:exported="true"
-            android:label="biubiubiu">
-
-        </activity>
+            android:label="biubiubiu"></activity>
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="哈哈哈"></activity>
+            android:label="哈哈哈" />
     </application>
 
 </manifest>

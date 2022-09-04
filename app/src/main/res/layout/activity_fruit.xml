@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  背景图能够和系统状态栏融合 需要借助 android:fitsSystemWindows="true" 这个属性来实现
+   在CoordinatorLayout   AppBarLayout  CollapsingToolbarLayout 这种嵌套结构的布局中
+   将控件的 android:fitsSystemWindows="true" 设置为true  就表示该控件会出现在系统状态栏里,
+   我们必须将背景图的所有父布局都设置该属性才可以
+   -->
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FruitActivity"
+    android:fitsSystemWindows="true"
+    >
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:fitsSystemWindows="true"
+        >
+        <!--        android:theme属性指定了一个 @style/ThemeOverlay.AppCompat.Dark.ActionBar 主题
+                    要实现更加高级的Toolbar效果,所以需要将这个主题的指定提到上一层来
+                    app:contentScrim 用于指定CollapsingToolbarLayout再趋于折叠状态以及折叠之后的背景色
+                    其实CollapsingToolbarLayout折叠之后就是一个普通的Toolbar,那么背景色肯定也是colorPrimary了,
+                    layout_scrollFlags 跟随 处理一些跟随隐藏的操作
+                    scroll 表示会随着水果内容详情的滚动一起滚动
+                    exitUntilCollapsed 随着滚动完成折叠之后就保留在界面上 不再移出屏幕
+        -->
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <!--            app:layout_collapseMode="parallax" 用于指定当前控件
+                            在CollapsingToolbarLayout折叠过程中的折叠模式,其中
+                            Toolbar指定成pin,表示在折叠的过程中位置始终保持不变,ImageView指定成
+                            parallax,表示会在折叠的过程中产生一定的错位偏
+
+            -->
+            <ImageView
+                android:fitsSystemWindows="true"
+                android:id="@+id/fruit_image_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                app:layout_collapseMode="parallax" />
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/fruit_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin" />
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!--    ScrollView 允许使用滚动的方式来查看屏幕以外的数据
+            而NestedScrollView 在此基础上还增加了嵌套响应滚动事件的功能
+            由于CoordinatorLayout 本身已经可以响应滚动事件了,因此外面在他内部
+            就需要使用NestedScrollView或RecyclerView这样的布局
+             指定了一个布局行为
+             app:layout_behavior="@string/appbar_scrolling_view_behavior"
+
+             不管是ScrollView还是NestedScrollView 他们的内部都只允许存在一个直接子布局
+             因此 外面想要在里面放很多内容的话,通常都会先嵌套一个LinearLayout,然后再将控件
+             放入LinearLayout中即可
+            -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="35dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="15dp"
+                app:cardCornerRadius="4dp">
+
+                <TextView
+                    android:id="@+id/fruit_content_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp" />
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+<!--  这里加入了FloatingActionButton,他和AppBarLayout 以及 NestedScrollView是平级的
+    FloatingActionButton 使用 layout_anchor属性指定了一个锚点,我们将锚点设置为AppBarLayout
+    这样悬浮按钮就会出现在水果标题栏的区域内了,
+    接着有使用了 app:layout_anchorGravity属性将悬浮按钮定位在标题栏区域的右下角
+   -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:src="@drawable/goback"
+        app:layout_anchor="@id/appBar"
+        app:layout_anchorGravity="bottom|end" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
